@@ -14,11 +14,10 @@ public class Parameter {
 	public static String USERNAME;
 	public static String URL;
 	public static String SRCPREFIX;
-	public static String DECPREFIX;
-	public static String ZJIP;
-	public static int DUANKOU;
+	public static String PREFIX;
 	public static String ID;
-	
+	public static String PATH;
+	public static  String InitSize;
 	/*
 	 * 
 	 * ≥ı ºªØ Ù–‘
@@ -27,11 +26,13 @@ public class Parameter {
 	 * */
 	static {
 		Properties prop = new Properties();
-
+       // System.out.println(Thread.currentThread().getContextClassLoader().getResource("parameter.properties"));
+	//	System.out.println(Parameter.class.getResource("/"));
+		PATH=Parameter.class.getResource("").toString().replace("file:/","")+"parameter.properties";
 		InputStream in = null;
 		try {
 			in = new BufferedInputStream(new FileInputStream(
-					"C:/pdfserver/parameter.properties"));
+					PATH));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -45,11 +46,10 @@ public class Parameter {
 		PASSWROD = prop.getProperty("PASSWROD");
 		USERNAME = prop.getProperty("USERNAME");
 		URL = prop.getProperty("URL");
-		SRCPREFIX = prop.getProperty("SRCPREFIX");
-		DECPREFIX = prop.getProperty("DECPREFIX");
-		ZJIP = prop.getProperty("ZJIP");
-		DUANKOU = Integer.valueOf(prop.getProperty("DUANKOU"));
-		ID = prop.getProperty("ID");
+		PREFIX= prop.getProperty("PREFIX");
+		ID= prop.getProperty("ID");
+		SRCPREFIX= prop.getProperty("SRCPREFIX");
+		InitSize=prop.getProperty("InitSize");
 		try {
 			in.close();
 		} catch (IOException e) {

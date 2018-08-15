@@ -31,28 +31,13 @@ public class JacobUtil {
 
 	// 8/10 代表word保存成html
 	public static final int WORD_HTML = 10;
-	   private static final int wdFormatPDF = 17; 
-
+	private static final int wdFormatPDF = 17;
 	//word进程
-public  ActiveXComponent app=null;
-//word打开文档
-public  Dispatch  doc=null;
+	public  ActiveXComponent app=null;
+    //word打开文档
+    public  Dispatch  doc=null;
 
 public static List<String> list;
-	
-	public static void main(String[] args) {
-/*		System.out.println(new SimpleDateFormat("yyyy" + File.separator + "MM")
-		.format(new Date()));
-		String docfile = "H:/Moban/00-GAY5F3AX-UY34-RP4L-XMLT-TUVO524H3YJB.doc";
-		String htmlfile = "H:/moban/55.pdf";
-		addWaterMarkIncludeWords("H:/moban/12.jpg",docfile,htmlfile,"12345678涂丽图2017-12-22");
-	    DocChangePdfForJco docChangePdfForJco = new	DocChangePdfForJco();
-	    docChangePdfForJco.convert(docfile, htmlfile);
-		//creatPdf("F:/sharedata/att/2017/11/file-0CD489E7-D9C6-43C1-B21D-125C3DA1DE5Bdoc*F:/sharedata/pdf/2017/11/1321431.pdf");
-*/
-		//wordToHtml2("H:/moban/采购结果决策纪要模板（50万元以下，含50万）.doc","H:/moban/采购结果决策纪要模板（50万元以下，含50万）.htm"); 
-		wordToHtml2("H:/moban/采购方案决策纪要模板（50万元以下，含50万）.doc","H:/moban/采购方案决策纪要模板（50万元以下，含50万）.htm"); 
-	}
 	/**
 	 * WORD转HTML
 	 * 
@@ -177,9 +162,9 @@ public static List<String> list;
 	/**
 	 * EXCEL转PDF
 	 * 
-	 * @param docfile
+	 * @param inFilePath
 	 *            WORD文件全路径
-	 * @param htmlfile
+	 * @param outFilePath
 	 *            转换后PDF存放路径
 	 */
 	public static boolean xlsToPdf(String inFilePath, String outFilePath) {
@@ -237,7 +222,7 @@ public static List<String> list;
 			String htmPathr=htmPath.replace(".htm", ".files/");
 			String insId=htmPath.substring(htmPath.lastIndexOf("/")+1, htmPath.lastIndexOf("."));
 			//查询是否存数据库
-			 Connection connection = GetConnection.GetConnection();
+			 Connection connection = DbcpUtil.getConnection();
 			File file=new File(htmPathr);
 			 File[] files = file.listFiles();
 			 String imgPath = null;
@@ -414,7 +399,7 @@ public static List<String> list;
         }  
     }  
     /**
-     * @param srcFile  源文件路径
+     * @param path  源文件路径
    
      */
     public  boolean creatPdf(String path){
@@ -540,7 +525,9 @@ public static List<String> list;
     
     public   boolean convert(String word, String pdf) {
 	      try{
-        app = new ActiveXComponent("Word.Application");  
+			  System.out.println("bb"+pdf);
+        app = new ActiveXComponent("Word.Application");
+			  System.out.println("aa"+pdf);
         Dispatch docs = app.getProperty("Documents").toDispatch();
         Dispatch WordBasic = app.getProperty("WordBasic").toDispatch();  
         doc = Dispatch.call(docs, "Open", word, false, false)  
@@ -556,11 +543,21 @@ public static List<String> list;
         doc=null;
         app.invoke("Quit", new Variant[] {});
         app=null;
+
         return true;  
-    } catch (Exception e) {  
+    } catch (Exception e) {
+	  e.printStackTrace();
   	  System.out.println(e.toString());
   	  return false;  
     }
 	  
-	    } 
+	    }
+
+
+	    public static void main(String[] args){
+			String property = System.getProperty("java.library.path");
+			System.out.println(property);
+			JacobUtil jo=new JacobUtil();
+			jo.convert("H:/moban/345.doc","H:/moban/pdf/345.pdf");
+		}
 }

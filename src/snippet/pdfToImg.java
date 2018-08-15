@@ -15,7 +15,9 @@ import javax.imageio.ImageIO;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
-
+/*
+pdfתͼƬ
+ */
 public class pdfToImg {
 	public static void main(String[] args){
 		savaPageAsJpgByAcrobat("H:\\moban\\ww1.pdf","H:\\moban\\ww1.jpg");
